@@ -1,4 +1,5 @@
-# Challenge: Daily Fruit Inventory Log
+# 01
+## Challenge: Daily Fruit Inventory Log
 
 1. Create a dictionary named fruit_price with the following initial items:
    {"Apple": 1500, "Bannana": 1000, "Orage": 1200}.
