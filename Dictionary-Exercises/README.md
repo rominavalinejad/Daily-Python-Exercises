@@ -1,4 +1,4 @@
-# 01
+# 01-Dictionary
 ## Challenge: Daily Fruit Inventory Log
 
 1. Create a dictionary named fruit_price with the following initial items:
