@@ -1,5 +1,5 @@
-# Distance from Origin & Analysis
-## Challenge:
+# 01-Tuple
+## Challenge: Euclidean Distance Calculator
 
 1. Create a tuple named coordinates containing the coordinates of point A in the plane: (3, 4).
 2. Write code to calculate the distance of this point from the origin (0, 0) using the Euclidean distance formula:
