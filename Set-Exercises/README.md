@@ -1,4 +1,4 @@
-# 01-Set
+# 01-Set-Exercises
 ## Challenge: User Access Dataset Analysis
 
 1. Create two sets, set_a and set_b, representing user IDs collected from two independent services.
