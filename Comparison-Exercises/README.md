@@ -1,5 +1,5 @@
 # 01-Comparison
-## Challenge: Chained Operators & Conditions
+## Challenge: Chained Operators & 
 
 1. Create a program that prompts the user to input three integer numbers (a ,b ,c).
 2. Implement a chained comparison to check if the numbers are sorted in ascending order (a <= b <= c).
