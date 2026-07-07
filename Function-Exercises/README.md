@@ -17,3 +17,12 @@
 3. Otherwise (during regular hours), there is no discount, and the price remains the same.
 4. The function must RETURN the final price as a clean integer.
 5. Call the function twice in your main script to test both scenarios (e.g., a purchase at 2 PM and a purchase at Midnight) and print the results.
+
+# 03-Function
+## Challenge: Audio Playlist Duration Analyzer
+
+1. Create a function named 'convert_seconds_to_minutes' that takes one parameter: 'total_seconds'. It must calculate the full minutes and remaining seconds, and RETURN a formatted string using 'f-string' and ':02d' specifier (e.g., M:SS).
+2. Create a second function named 'calculate_playlist_duration' that takes 'track_list' (a list of numbers in seconds) as a parameter.
+3. Use a 'for' loop to iterate through the 'track_list'. Inside the loop, sequentially call the first function to dynamically print each track's formatted time, add the track's duration to the accumulator, and increment the track number.
+4. After the loop completes, call the 'convert_seconds_to_minutes' function one last time, passing the accumulated total seconds to RETURN the aggregated album duration.
+5. call 'convert_seconds_to_minutes' with the total accumulated seconds to RETURN the overall album duration.
