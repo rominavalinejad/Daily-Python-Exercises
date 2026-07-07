@@ -25,4 +25,4 @@
 2. Create a second function named 'calculate_playlist_duration' that takes 'track_list' (a list of numbers in seconds) as a parameter.
 3. Use a 'for' loop to iterate through the 'track_list'. Inside the loop, sequentially call the first function to dynamically print each track's formatted time, add the track's duration to the accumulator, and increment the track number.
 4. After the loop completes, call the 'convert_seconds_to_minutes' function one last time, passing the accumulated total seconds to RETURN the aggregated album duration.
-5. call 'convert_seconds_to_minutes' with the total accumulated seconds to RETURN the overall album duration.
+5. Call 'convert_seconds_to_minutes' with the total accumulated seconds to RETURN the overall album duration.
