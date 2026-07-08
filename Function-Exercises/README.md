@@ -26,3 +26,13 @@
 3. Use a 'for' loop to iterate through the 'track_list'. Inside the loop, sequentially call the first function to dynamically print each track's formatted time, add the track's duration to the accumulator, and increment the track number.
 4. After the loop completes, call the 'convert_seconds_to_minutes' function one last time, passing the accumulated total seconds to RETURN the aggregated album duration.
 5. Call 'convert_seconds_to_minutes' with the total accumulated seconds to RETURN the overall album duration.
+
+# 04-Caesar Cipher Encryptor
+## Challenge: Audio Playlist Duration Analyzer
+
+1. Create a function named 'encrypt_message' that takes two parameters: 'main_text' and 'key_number'.
+2. Inside the function, define a string named 'alphabet' containing all lowercase letters from 'a' to 'z' to serve as your reference roadmap.
+3. Use a loop to iterate through each character of the 'main_text' sequentially.
+4. For each character, find its corresponding index on the 'alphabet' string, shift this index forward by adding the 'key_number', and extract the new shifted character.
+5. Append each newly generated character into a container variable named 'chiper_text' and RETURN the final encrypted message after the loop completes.
+6. Print a structured output displaying a security warning message followed by the newly encrypted password using string formatting.
