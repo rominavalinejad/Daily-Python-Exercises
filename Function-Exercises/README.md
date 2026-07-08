@@ -27,8 +27,8 @@
 4. After the loop completes, call the 'convert_seconds_to_minutes' function one last time, passing the accumulated total seconds to RETURN the aggregated album duration.
 5. Call 'convert_seconds_to_minutes' with the total accumulated seconds to RETURN the overall album duration.
 
-# 04-Caesar Cipher Encryptor
-## Challenge: Audio Playlist Duration Analyzer
+# 04-Function
+## Challenge: Caesar Cipher Encryptor
 
 1. Create a function named 'encrypt_message' that takes two parameters: 'main_text' and 'key_number'.
 2. Inside the function, define a string named 'alphabet' containing all lowercase letters from 'a' to 'z' to serve as your reference roadmap.
