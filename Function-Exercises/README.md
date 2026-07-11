@@ -36,3 +36,14 @@
 4. For each character, find its corresponding index on the 'alphabet' string, shift this index forward by adding the 'key_number', and extract the new shifted character.
 5. Append each newly generated character into a container variable named 'chiper_text' and RETURN the final encrypted message after the loop completes.
 6. Print a structured output displaying a security warning message followed by the newly encrypted password using string formatting.
+
+# 05-Function
+## Challenge: Patient Heart Rate Analyzer
+### Objective:
+In medical devices, raw sensor data often contains environmental noise or artifacts (e.g., loose cable connections generating extreme, impossible values). Before analyzing a patient's heart rate metrics, these anomalies must be filtered out to ensure accurate diagnostic calculations. The goal of this challenge is to create a robust signal processing function that filters out extreme noise.
+
+1. Create a function named calculate_signal_energy that takes an arbitrary number of raw heart rate readings using *args and optional keyword arguments using **kwargs.
+2. Inside the function, extract the keyword argument max_limit to define the maximum allowable heart rate threshold. If max_limit is not provided by the user, it must default to 100.
+3. Use a loop to iterate through all raw samples provided in args.
+4. Calculate the final signal energy by computing the sum of squares of the filtered (valid) values only.
+5. Print a structured multi-line report showing the Total Samples Received, Valid Samples (Filtered), and the Final Signal Energy using clean string formatting.
