@@ -9,4 +9,4 @@
    - Show all tasks: Display every task stored in the system.
    - Show important tasks: Dynamically filter and output only the tasks that belong to the UrgentTask type.
    - Exit: Safely terminate the program.
-6. Use an 'if-elif-else' block to show an error "Invalid input" if the user typee anything other than 1, 2, or 3.
+6. Use an 'if-elif-else' block to show an error "Invalid input" if the user type anything other than 1, 2, or 3.
