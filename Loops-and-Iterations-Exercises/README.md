@@ -9,7 +9,7 @@
 6. Once all attempts are exhausted without a successful login, lock the system and display a terminal alert ("Access Denied / Account Locked").
 
 # 02-Loops-and-Iterations
-## Challenge:Dynamic Smart Waste Categorization System
+## Challenge: Dynamic Smart Waste Categorization System
 
 1. Implement an infinite management loop (while True) that acts as an enterprise-level operator console.
 2. Prompt the operator to enter the total number of items to process per batch, with an option to type 'finish' to safely shut down the system.
