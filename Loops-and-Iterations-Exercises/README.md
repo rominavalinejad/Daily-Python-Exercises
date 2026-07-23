@@ -28,5 +28,5 @@
 1. Define a list containing various unformatted, valid, invalid, and spam email strings.
 2. Initialize three empty lists (`valid_emails`, invalid_emails, and `spam_emails`) to categorize the processed results.
 3. Iterate over the raw_emails list using a loop, cleaning each email by stripping whitespace and converting text to lowercase.
-4. Implement conditional logic (`if-elif-else`) to classify emails based on spam keywords (`marketing`, spam`) and validation checks (presence of `@ and `.`).
+4. Implement conditional logic (`if-elif-else`) to classify emails based on spam keywords (`marketing`, spam`) and validation checks (presence of `@` and `.`).
 5. Append each processed email to its corresponding list and print the categorized results clearly line by line.
