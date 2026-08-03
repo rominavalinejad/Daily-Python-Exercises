@@ -20,3 +20,13 @@
 4. Override the __str__ method in VIPCustomer to return a customized string that includes the premium status and the discount rate percentage.
 5. Create a simulated dataset named customers_data as a list containing at least 5-6 instances of both Customer and VIPCustomer with different purchase values.
 6. Write a loop to iterate through the dataset, filtering and printing only the details of customers whose purchase_amount is strictly greater than 100.
+
+# 03-OOP
+## Challenge: Vehicle Fleet Management System
+### Scenario:
+A vehicle rental agency needs a system to manage its fleet of standard cars and electric vehicles (EVs). To encourage sustainable travel, the agency offers a 10% eco-discount on the daily rental cost of electric vehicles.
+
+1. Vehicle Base Model: Represent standard vehicles with attributes for brand, model, and daily rate. Include functionality to calculate rental costs for given days and display formatted vehicle details.
+2. Electric Vehicle Support: Model electric vehicles with extra properties like battery capacity, ensuring rental calculations automatically incorporate the 10% eco-discount.
+3. Fleet Management: Implement a central fleet manager to register vehicles, view the entire inventory, and dynamically isolate electric vehicles.
+4. Execution: Populate the fleet with sample vehicles, list all entries, and calculate 3-day rental totals for the electric fleet.
