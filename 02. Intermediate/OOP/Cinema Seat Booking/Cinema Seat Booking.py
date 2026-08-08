@@ -108,6 +108,3 @@ hall.book_seat_id("V1")
 
 '''Calculate total revenue for all booked seats'''
 hall.calculate_total_revenue()
-
-
-
