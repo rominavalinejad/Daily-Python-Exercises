@@ -1,0 +1,44 @@
+
+{
+    "monthly_salary": 30000000,
+    "saving_goal": 7000000,
+
+    "expenses": {
+        "Rent": {
+            "expected": 10000000,
+            "warning_threshold": 10
+        },
+        "Electricity": {
+            "expected": 500000,
+            "warning_threshold": 20
+        },
+        "Water": {
+            "expected": 200000,
+            "warning_threshold": 20
+        },
+        "Gas": {
+            "expected": 300000,
+            "warning_threshold": 30
+        },
+        "Internet": {
+            "expected": 400000,
+            "warning_threshold": 10
+        },
+        "Food": {
+            "expected": 5000000,
+            "warning_threshold": 15
+        },
+        "Transport": {
+            "expected": 2000000,
+            "warning_threshold": 20
+        },
+        "Shopping": {
+            "expected": 2000000,
+            "warning_threshold": 20
+        },
+        "Insurance": {
+            "expected": 1000000,
+            "warning_threshold": 10
+        }
+    }
+}
