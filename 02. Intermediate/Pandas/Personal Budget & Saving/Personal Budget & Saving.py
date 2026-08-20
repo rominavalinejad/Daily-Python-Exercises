@@ -1,4 +1,6 @@
 import json
+from turtle import pensize
+from PIL.Image import preinit
 import pandas as pd
 
 
@@ -67,7 +69,79 @@ expenses = pd.merge(
 )
 
 
-# -------- Display Three-Month Expenses ---------
+# -------- DataFrame Inspection ---------
 
 print("\nThree-Month Expenses:")
 print(expenses)
+
+print("\nDataFrame Shape:")
+print(expenses.shape)
+
+print("\nDataFrame Columns:")
+print(expenses.columns)
+
+print("\nDataFrame Info:")
+expenses.info()
+
+print("\nStatistical Summary:")
+print(expenses.describe())
+
+# -------- Filtering --------
+
+print("\nAugust Expenses:")
+print(expenses["August"])
+
+high_august_expenses = expenses[
+    expenses["August"] > 2_000_000
+]
+
+print("\nHigh August Expenses:")
+print(high_august_expenses)
+
+increased_expenses = expenses[
+    expenses["August"] > expenses["June"]
+]
+
+print("\nExpenses Increased from June to August:")
+print(increased_expenses)
+
+expenses["Increase (%)"] = (
+    (expenses["August"] - expenses["June"])
+    / expenses["June"]
+) * 100
+
+print("\nExpense Increase Percentage:")
+print(expenses[["Category", "Increase (%)"]])
+
+# -------- Sort Expenses by Increase Percentage --------
+
+sorted_expenses = expenses.sort_values(
+    by="Increase (%)",
+    ascending=False
+)
+
+print("\nExpenses Sorted by Increase:")
+print(
+    sorted_expenses[
+        ["Category", "June", "August", "Increase (%)"]
+    ]
+)
+
+# -------- Monthly Total Expenses --------
+
+monthly_total = expenses[
+    ["June", "July", "August"]
+].sum()
+
+print("\nTotal Expenses by Month:")
+print(monthly_total)
+
+# -------- Monthly Savings --------
+
+monthly_salary = budget_config["monthly_salary"]
+
+monthly_savings = monthly_salary - monthly_total
+
+print("\nMonthly Savings:")
+print(monthly_savings)
+
