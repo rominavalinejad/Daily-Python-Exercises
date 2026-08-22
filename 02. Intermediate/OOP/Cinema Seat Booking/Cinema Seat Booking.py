@@ -27,7 +27,7 @@ class Seat:
         #     else:
         #         print("This seat is NOT booked yet")
 
-    def Book(self):
+    def book(self):
         if self.status == "available":
             self.status = "booked"
             print ("This seat is now booked successfully")
@@ -36,7 +36,7 @@ class Seat:
         elif self.status == "booked":
             print("This seat is already booked")
 
-    def Cancel(self):
+    def cancel(self):
         if self.status == "booked":
             self.status = "available"
             print("Booking calnceled successfully")
@@ -65,7 +65,7 @@ class CinemaHall:
     # def book_seat_id(self, target_id):
     #     for seat_item in self.seat_list:
     #         if seat_item.seat_id == target_id:
-    #             seat_item.Book()
+    #             seat_item.book()
     #             return
     #     print(f"Seat {target_id} no found in this hall")
 
@@ -87,8 +87,6 @@ class CinemaHall:
         print(f"Total Revenue for {self.hall_name}: {total_revenue}")
         return total_revenue
 
-hall = CinemaHall("Main Hall")
-
 class Movie:
     def __init__(self, title, duration, genre):
         self.title = title
@@ -106,8 +104,8 @@ class Screening:
         for seat_item in self.hall.seat_list:
             if seat_item.seat_id == seat_id:
                 if seat_item.status == "available":
-                    seat_item.Book()
-                    booking = Booking(
+                    seat_item.book()
+                    new_booking = booking(
                         customer,
                         self,
                         seat_item
@@ -120,7 +118,7 @@ class Screening:
         print(f"Seat {seat_id} NOT found!")
 
 
-class Booking:
+class booking:
     def __init__(self, customer, screening, seat):
         self.customer = customer
         self.screening = screening
@@ -149,9 +147,6 @@ for row in "ABCD":
     for number in range(1, 11):
         seat_id = f"VIP-{row}{number}"
         hall.add_seat(VIP_seat(seat_id, 200, "Popcorn + Drink"))
-
-my_movie = Movie("Inception", 148, "Sci-Fi")
-my_screening = Screening(my_movie, hall, "18:00")
 
 # Create a movie
 my_movie = Movie("Inception", 148, "Sci-Fi")
