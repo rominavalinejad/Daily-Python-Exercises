@@ -1,0 +1,16 @@
+knowledge_base/
+├── company/
+│   └── about.md
+├── products/
+│   ├── vps.md
+│   ├── database.md
+│   ├── object-storage.md
+│   └── kubernetes.md
+├── pricing/
+│   └── pricing.md
+├── support/
+│   └── support.md
+└── policies/
+    ├── backup.md
+    ├── refund.md
+    └── sla.md
