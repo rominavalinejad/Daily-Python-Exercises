@@ -202,10 +202,6 @@ Building a RAG pipeline end to end, preparing documents for semantic search, reu
 
 ---
 
-<!--
-## 📄 License
-Add your license here.
-
 ## 👤 Author
 
 **Romina Valinejad**
