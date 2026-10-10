@@ -1,312 +1,218 @@
-# CloudAlam — Retrieval-Augmented Generation (RAG) System
+<div align="center">
 
-A practical, end-to-end **Retrieval-Augmented Generation (RAG)** project built for **CloudAlam**, a fictional cloud infrastructure provider. The system retrieves relevant information from a curated company knowledge base and uses a locally hosted language model to generate context-grounded answers.
+# ☁️ CloudAlam RAG
 
-The project goes beyond a basic chatbot: it implements a document ingestion workflow, semantic retrieval with vector embeddings, persistent vector storage, local LLM generation, an interactive chat interface, and automated evaluation scripts for retrieval quality and answer completeness.
+**A local, evaluation-driven Retrieval-Augmented Generation system**
+that answers questions from a curated knowledge base using ChromaDB, Sentence Transformers and Ollama.
 
----
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-orange)
+![Embeddings](https://img.shields.io/badge/Embeddings-all--MiniLM--L6--v2-blueviolet)
+![LLM](https://img.shields.io/badge/LLM-llama3.2%20via%20Ollama-black)
+![Hit Rate@3](https://img.shields.io/badge/Hit%20Rate%403-100%25-brightgreen)
+![MRR](https://img.shields.io/badge/MRR-0.967-brightgreen)
+![Answer Eval](https://img.shields.io/badge/Answer%20Eval-93.33%25-green)
 
-## Project Overview
-
-CloudAlam's knowledge base contains service and policy documentation for products such as VPS hosting, managed databases, object storage, Kubernetes, backups, support, and service-level targets.
-
-The RAG workflow is designed to answer questions using these documents rather than relying only on the language model's parametric knowledge.
-
-### Key Capabilities
-
-- **Document ingestion:** loads company knowledge-base documents written in Markdown.
-- **Text preparation and chunking:** splits source documents into smaller passages suitable for retrieval.
-- **Semantic embeddings:** represents document chunks and user questions as vectors using `sentence-transformers/all-MiniLM-L6-v2`.
-- **Persistent vector database:** stores and retrieves document chunks with ChromaDB.
-- **Semantic search:** retrieves the most relevant passages for a user's question.
-- **Context-aware generation:** sends the retrieved context to a locally hosted `llama3.2` model through Ollama.
-- **Interactive chat UI:** provides a user-facing interface for asking questions about CloudAlam's services.
-- **Retrieval evaluation:** measures whether expected source documents appear among the top retrieved results.
-- **Answer evaluation:** checks whether generated answers include required facts from a predefined evaluation set.
-- **Evaluation-driven development:** uses measurable test results to identify weaknesses and improve the pipeline.
+</div>
 
 ---
 
-## Architecture
+## 📖 About
 
-```text
-                 CloudAlam Markdown Knowledge Base
-                              |
-                              v
-                     Document Ingestion
-                              |
-                              v
-                      Text Chunking
-                              |
-                              v
-                  Sentence Transformer Model
-                              |
-                              v
-                     ChromaDB Collection
-                              |
-                  User Question (Chat UI)
-                              |
-                              v
-                  Question Embedding/Search
-                              |
-                              v
-                    Top-K Relevant Chunks
-                              |
-                              v
-                 Context + Question Prompt
-                              |
-                              v
-                    Ollama: llama3.2
-                              |
-                              v
-                       Generated Answer
+CloudAlam is a fictional cloud infrastructure provider. This project builds a complete RAG pipeline over its service and policy documentation (VPS hosting, managed databases, object storage, Kubernetes, backups, support and SLA targets) so that answers are grounded in company documents rather than in the language model's own knowledge.
+
+It goes beyond a basic chatbot: the pipeline is **measured**, not just demonstrated. Retrieval quality and answer completeness are tested with dedicated evaluation scripts, and the known limitations of those tests are documented openly.
+
+<!--
+  📸 Add a screenshot or short GIF of chat_ui.py here, e.g.:
+  <p align="center"><img src="docs/assets/demo.gif" width="800" alt="CloudAlam RAG chat UI demo"></p>
+-->
+
+---
+
+## ✨ Features
+
+| | Feature | Details |
+| --- | --- | --- |
+| 📥 | **Document ingestion** | Loads Markdown knowledge-base documents |
+| ✂️ | **Chunking** | Splits documents into focused, retrieval-sized passages |
+| 🧠 | **Semantic embeddings** | `sentence-transformers/all-MiniLM-L6-v2` for both chunks and questions |
+| 🗄️ | **Persistent vector store** | ChromaDB, reusable between runs |
+| 🔎 | **Semantic search** | Retrieves the top matching chunks for each question |
+| 🤖 | **Local generation** | `llama3.2` served by Ollama through its local API |
+| 💬 | **Chat interface** | Interactive UI with lazy loading for faster startup |
+| 📏 | **Retrieval evaluation** | Hit Rate@3 and MRR |
+| ✅ | **Answer evaluation** | Required-fact checks on generated answers |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    KB[("Markdown<br/>Knowledge Base")] --> ING[Document Ingestion]
+    ING --> CH[Chunking]
+    CH --> EMB["Embeddings<br/>all-MiniLM-L6-v2"]
+    EMB --> DB[("ChromaDB")]
+
+    Q([User Question<br/>Chat UI]) --> QE[Question Embedding]
+    QE --> DB
+    DB -->|Top-K chunks| P[Context + Question Prompt]
+    Q --> P
+    P --> LLM["Ollama<br/>llama3.2"]
+    LLM --> A([Generated Answer])
 ```
 
-The ingestion pipeline prepares and indexes the knowledge base. At question time, the application retrieves relevant chunks and passes them to the local language model as context for answer generation.
+The ingestion pipeline prepares and indexes the knowledge base. At question time, the app retrieves the most relevant chunks and passes them to the local model as context.
 
 ---
 
-## Technology Stack
+## 🧰 Tech Stack
 
-| Technology | Role in the project |
+| Technology | Role |
 | --- | --- |
-| **Python** | Main implementation language and pipeline orchestration |
+| **Python** | Implementation language and pipeline orchestration |
 | **ChromaDB** | Persistent vector storage and similarity search |
-| **Sentence Transformers** | Converts document chunks and queries into embeddings |
-| **`all-MiniLM-L6-v2`** | Embedding model used for semantic retrieval |
-| **Ollama** | Runs the language model locally and exposes its generation API |
-| **`llama3.2`** | Generates answers using the retrieved context |
-| **Markdown** | Human-readable source format for the knowledge base |
+| **Sentence Transformers** | Embedding generation |
+| **all-MiniLM-L6-v2** | Embedding model for semantic retrieval |
+| **Ollama** | Runs the language model locally and exposes the generation API |
+| **llama3.2** | Answer generation from retrieved context |
+| **Markdown** | Source format of the knowledge base |
 
 ---
 
-## Project Structure
+## 🚀 Quick Start
 
-```text
-CloudAlam/
-├── load_documents.py       # Loads source knowledge-base documents
-├── chunk_documents.py     # Splits documents into retrieval-sized chunks
-├── embed_documents.py     # Creates embeddings for document chunks
-├── chroma_db.py           # Sets up or manages the ChromaDB index
-├── search_chroma.py       # Tests semantic retrieval against the vector store
-├── rag.py                 # RAG pipeline: retrieve context and generate an answer
-├── chat_ui.py              # Interactive chat interface
-├── evaluate_rag.py         # Evaluates retrieval quality
-├── evaluate_answers.py    # Evaluates required facts in generated answers
-├── chroma_db_fast/         # Persisted ChromaDB data (generated locally)
-└── README.md
-```
-
-The knowledge-base Markdown files are the source of truth for the fictional company's service information. The ChromaDB directory is generated data and may need to be recreated if it is not included in a checkout.
-
----
-
-## Knowledge Base
-
-The current dataset consists of **10 Markdown documents and 82 indexed chunks**. It covers key CloudAlam service details, including:
-
-| Area | Example information represented in the knowledge base |
-| --- | --- |
-| VPS hosting | Basic, Pro, and Business plans, resource allocations, and pricing |
-| Backups | Optional VPS backups, six-hour intervals when enabled, and seven daily recovery points |
-| Managed databases | PostgreSQL, MySQL, and Redis offerings with Starter, Standard, and Pro tiers |
-| Object storage | S3-compatible storage and Standard / Infrequent pricing |
-| Kubernetes | Frankfurt deployment across Zones 1 and 2 |
-| Customer support | 24/7 support and target first-response times by severity |
-| Service availability | Standard VPS target SLA of 99.9% |
-
-These details are fictional project data and are used to demonstrate how a RAG system can retrieve information from structured company documentation.
-
----
-
-## How the RAG Pipeline Works
-
-### 1. Ingest source documents
-
-The Markdown knowledge-base documents are loaded into the application so their content can be processed consistently.
-
-### 2. Split documents into chunks
-
-Long documents are divided into smaller text segments. Chunking allows the retriever to return focused passages instead of supplying entire documents for every question.
-
-### 3. Generate embeddings
-
-The project uses `sentence-transformers/all-MiniLM-L6-v2` to encode text chunks as dense vector representations. The same embedding model is used for user questions so they can be compared in the same vector space.
-
-### 4. Store and retrieve with ChromaDB
-
-Embeddings, chunk text, and associated metadata are stored in a persistent ChromaDB collection named `cloudealam_knowledge`. The current persisted database path is `./chroma_db_fast`.
-
-At query time, the system performs semantic similarity search and retrieves the top matching chunks for the question.
-
-### 5. Generate a context-grounded answer
-
-The retrieved passages are combined with the user's question and sent to the local Ollama API, using the `llama3.2` model. This gives the model relevant CloudAlam documentation to use when formulating its answer.
-
-### 6. Interact through the chat UI
-
-`chat_ui.py` provides an interface for asking questions against the RAG pipeline. The interface uses lazy loading to reduce the delay before the application becomes usable.
-
----
-
-## Evaluation
-
-A key focus of this project is evaluating the system rather than relying only on a few successful demo questions. Two evaluation scripts have been implemented for different parts of the pipeline.
-
-### Retrieval Evaluation — `evaluate_rag.py`
-
-The retrieval test set contains **15 questions** with expected source-document relevance. Evaluation uses the top three retrieved chunks/documents.
-
-Latest recorded results:
-
-| Metric | Result | Interpretation |
-| --- | ---: | --- |
-| **Hit Rate@3** | **100% (15/15)** | The expected relevant source was present in the top three results for every test question. |
-| **Mean Reciprocal Rank (MRR)** | **0.967** | Relevant results generally appeared at or very near the top of the ranking. |
-
-One query about the Standard Object Storage price ranked its expected source second rather than first. These results indicate strong retrieval performance on the current, small, curated test set; they should not be interpreted as a guarantee of performance on unseen questions or larger datasets.
-
-### Answer Evaluation — `evaluate_answers.py`
-
-The answer evaluation script checks whether generated responses contain required facts for a set of **15 questions**.
-
-Latest recorded result:
-
-- **14 of 15 checks passed (93.33%).**
-- One failure was caused by exact substring matching: the expected text was `24/7`, while the model expressed the same fact as “24 hours a day, 7 days a week.”
-- The answer was semantically equivalent, so this case exposed a limitation in the evaluator rather than a factual error in the response.
-
-This is an important distinction: exact string matching can produce false negatives when a correct answer uses different wording. A stronger evaluator should account for semantic equivalence and should be validated against manually reviewed examples.
-
-### Next Evaluation Goal: Faithfulness and Hallucination Detection
-
-The next planned evaluation step is to assess whether each generated answer is supported by the passages retrieved for that question. This differs from checking whether an answer contains expected facts: an answer may include the expected fact while also adding unsupported claims.
-
-A proposed faithfulness evaluation will identify claims that cannot be supported by the retrieved context. LLM-as-a-judge scoring can help with this task, but its decisions should be treated as estimates and reviewed against the source passages, especially for ambiguous cases.
-
----
-
-## Running the Project
-
-### Prerequisites
-
-- Python 3
-- Ollama installed and running locally
-- The `llama3.2` model available in Ollama
-- The Python packages used by the project scripts, including ChromaDB and Sentence Transformers
-
-### 1. Start Ollama and make sure the model is available
+**Prerequisites:** Python 3, [Ollama](https://ollama.com) installed and running, and the Python packages used by the scripts (including `chromadb`, `sentence-transformers` and the UI framework used by `chat_ui.py`).
 
 ```bash
+# 1. Make sure the model is available in Ollama
 ollama pull llama3.2
-ollama run llama3.2
-```
 
-Keep Ollama running while using the RAG application. The project calls the local generation API at:
+# 2. Install dependencies
+pip install -r requirements.txt   # if the file is present
 
-```text
-http://localhost:11434/api/generate
-```
-
-### 2. Install Python dependencies
-
-Install the dependencies used by the scripts in your environment. If the project has a `requirements.txt`, use it:
-
-```bash
-pip install -r requirements.txt
-```
-
-If no dependency file is present, install the packages required by the scripts, including `chromadb`, `sentence-transformers`, and the UI framework used by `chat_ui.py`.
-
-### 3. Build or refresh the vector index
-
-Run the ingestion and indexing scripts in the order appropriate to their current interfaces:
-
-```bash
+# 3. Build the vector index (skip if chroma_db_fast/ already exists and matches your documents)
 python load_documents.py
 python chunk_documents.py
 python embed_documents.py
 python chroma_db.py
+
+# 4. Launch the app
+python chat_ui.py
 ```
 
-These scripts represent the project's document-loading, chunking, embedding, and vector-store stages. If the persisted database is already available and matches the current documents and embedding model, rebuilding it may not be necessary. Check each script's implementation for its exact inputs and outputs before rerunning the pipeline.
+> The app calls the Ollama generation API at `http://localhost:11434/api/generate`, so keep Ollama running while you use it.
+>
+> Check each script's implementation for its exact inputs and outputs before re-running the indexing steps.
 
-### 4. Test semantic retrieval
+To test retrieval on its own:
 
 ```bash
 python search_chroma.py
 ```
 
-### 5. Run the RAG application
+---
 
-```bash
-python chat_ui.py
-```
+## 📊 Evaluation
 
-### 6. Run the evaluation scripts
+Quality is treated as a measurable property. Two scripts evaluate different parts of the pipeline.
+
+| Evaluation | Script | Test set | Result |
+| --- | --- | --- | --- |
+| Retrieval — **Hit Rate@3** | `evaluate_rag.py` | 15 questions | **100%** (15/15) |
+| Retrieval — **MRR** | `evaluate_rag.py` | 15 questions | **0.967** |
+| Answers — **required facts** | `evaluate_answers.py` | 15 questions | **93.33%** (14/15) |
 
 ```bash
 python evaluate_rag.py
 python evaluate_answers.py
 ```
 
-The evaluation results depend on the current knowledge base, vector index, model version, prompt, and test set. Re-run the evaluations after making changes to these components.
+<details>
+<summary><b>🔍 Details and interpretation</b></summary>
+
+### Retrieval (`evaluate_rag.py`)
+Evaluation uses the top three retrieved chunks/documents and checks whether the expected source is among them. One query, about the Standard Object Storage price, ranked its expected source second instead of first, which accounts for the MRR of 0.967.
+
+### Answers (`evaluate_answers.py`)
+The single failure came from exact substring matching: the expected text was `24/7`, while the model answered "24 hours a day, 7 days a week". The answer was semantically correct, so this exposed a limitation of the evaluator, not a factual error in the response. Exact matching can produce false negatives; a stronger evaluator should handle semantic equivalence and be validated against manually reviewed examples.
+
+### Reading these numbers
+These results reflect a small, curated test set. They should not be taken as a guarantee of performance on unseen questions or larger datasets. Results also depend on the knowledge base, vector index, model version, prompt and test set, so re-run the evaluations after changing any of them.
+
+</details>
+
+### 🎯 Next step: faithfulness & hallucination detection
+
+Containing an expected fact is not the same as being supported by the retrieved context: an answer can include the right fact and still add unsupported claims. The planned evaluation checks whether each answer is backed by the passages retrieved for that question. LLM-as-a-judge scoring may help, but its decisions should be treated as estimates and reviewed against the source passages, especially in ambiguous cases. *This stage is not yet implemented.*
 
 ---
 
-## Engineering Highlights
+## 📚 Knowledge Base
 
-- **End-to-end RAG implementation:** connects document preparation, vector search, and LLM-based response generation in one workflow.
-- **Local model inference:** uses Ollama with `llama3.2`, allowing generation to run through a local API rather than requiring a hosted LLM API for this setup.
-- **Persistent semantic index:** uses ChromaDB so indexed chunks can be reused between application runs.
-- **Dedicated retrieval testing:** evaluates ranking behavior with Hit Rate@3 and MRR instead of relying only on manual inspection.
-- **Answer-level checks:** validates generated responses against required facts and documents a real limitation in exact-match evaluation.
-- **Explicit evaluation boundaries:** distinguishes retrieval success, required-fact coverage, and faithfulness as separate quality dimensions.
-- **Responsive UI startup:** applies lazy loading in the chat interface to reduce initial loading friction.
+**10 Markdown documents → 82 indexed chunks**, covering:
 
----
+| Area | Example information |
+| --- | --- |
+| VPS hosting | Basic, Pro and Business plans, resource allocations, pricing |
+| Backups | Optional VPS backups, six-hour intervals when enabled, seven daily recovery points |
+| Managed databases | PostgreSQL, MySQL and Redis with Starter, Standard and Pro tiers |
+| Object storage | S3-compatible storage, Standard / Infrequent pricing |
+| Kubernetes | Frankfurt deployment across Zones 1 and 2 |
+| Customer support | 24/7 support, target first-response times by severity |
+| Service availability | Standard VPS target SLA of 99.9% |
 
-## Current Scope and Limitations
-
-- The knowledge base is a small, curated fictional dataset; evaluation scores may not generalize to other domains or larger corpora.
-- Retrieval metrics measure whether relevant sources are retrieved, not whether the generated answer is correct.
-- Required-fact evaluation can miss semantic equivalents when it relies on exact string matching.
-- Faithfulness / unsupported-claim evaluation is the next planned stage and should not be considered complete until implemented and reviewed.
-- The project currently documents a local development workflow; production deployment, authentication, monitoring, and access control are outside the scope described here.
+All details are fictional and exist to demonstrate RAG over structured company documentation. The Markdown files are the source of truth; the `chroma_db_fast/` directory is generated locally and can be recreated.
 
 ---
 
-## Potential Future Improvements
+## 🗂️ Project Structure
 
-- Implement faithfulness evaluation and unsupported-claim reporting.
-- Improve answer evaluation with semantic matching and manually reviewed test cases.
-- Expand the question set with paraphrases, edge cases, and questions whose answers are absent from the knowledge base.
-- Evaluate retrieval with additional metrics and compare chunk sizes, overlap settings, and embedding models.
-- Add explicit source citations to generated answers so users can verify claims against retrieved passages.
-- Add automated regression tests for the ingestion, retrieval, and generation stages.
-- Track evaluation results across changes to prompts, models, and knowledge-base content.
-- Add configuration management for model names, API URLs, database paths, and retrieval parameters.
-- Add a dependency lockfile or `requirements.txt` for reproducible setup.
-
----
-
-## Learning Objectives
-
-This project provides hands-on experience with:
-
-- Building a Retrieval-Augmented Generation pipeline
-- Preparing documents for semantic search
-- Generating and reusing text embeddings
-- Storing and querying vectors with ChromaDB
-- Connecting a local language model through an HTTP API
-- Designing context-aware prompts
-- Building an interactive question-answering interface
-- Measuring retrieval quality with ranking metrics
-- Evaluating answer coverage and understanding exact-match limitations
-- Planning faithfulness and hallucination evaluation
+```text
+CloudAlam/
+├── load_documents.py     # Loads source knowledge-base documents
+├── chunk_documents.py    # Splits documents into retrieval-sized chunks
+├── embed_documents.py    # Creates embeddings for document chunks
+├── chroma_db.py          # Sets up or manages the ChromaDB index
+├── search_chroma.py      # Tests semantic retrieval against the vector store
+├── rag.py                # RAG pipeline: retrieve context, generate an answer
+├── chat_ui.py            # Interactive chat interface
+├── evaluate_rag.py       # Retrieval evaluation (Hit Rate@3, MRR)
+├── evaluate_answers.py   # Required-fact answer evaluation
+├── chroma_db_fast/       # Persisted ChromaDB data (generated locally)
+└── README.md
+```
 
 ---
 
-## Summary
+## ⚠️ Scope & Limitations
 
-CloudAlam is an end-to-end RAG learning project that combines a curated Markdown knowledge base, Sentence Transformers embeddings, persistent ChromaDB retrieval, and local LLM generation through Ollama. It also includes separate evaluation scripts for retrieval and answer-level checks, with recorded results of **100% Hit Rate@3** and **93.33% required-fact pass rate** on the current 15-question test set. The project emphasizes not only building the pipeline, but also measuring its behavior and identifying the next steps toward more reliable, context-grounded answers.
+- The knowledge base is small, curated and fictional, so scores may not generalize to other domains or larger corpora.
+- Retrieval metrics show whether relevant sources are retrieved, not whether the generated answer is correct.
+- Required-fact evaluation relies on exact string matching and can miss semantic equivalents.
+- Faithfulness evaluation is planned but not yet implemented.
+- The project documents a local development workflow. Production deployment, authentication, monitoring and access control are out of scope.
+
+---
+
+## 🎓 What This Project Demonstrates
+
+Building a RAG pipeline end to end, preparing documents for semantic search, reusing embeddings, querying vectors with ChromaDB, connecting a local LLM over HTTP, designing context-aware prompts, measuring retrieval with ranking metrics, understanding the limits of exact-match answer evaluation, and planning faithfulness evaluation.
+
+---
+
+<!--
+## 📄 License
+Add your license here.
+
+## 👤 Author
+
+**Romina Valinejad**
+
+- GitHub: [@rominavalinejad](https://github.com/rominavalinejad)
+- LinkedIn: [rominavalinejad](https://www.linkedin.com/in/romina-valinejad-b40381413)
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
